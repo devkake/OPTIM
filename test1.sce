@@ -1,0 +1,11 @@
+disp('This test is for OraclePG');
+exec('Probleme_R.sce');
+exec('Structures_R.sce');
+exec('Visualg.sci');
+exec('HydrauliqueP.sci'); 
+exec('Verification.sci');
+exec('OraclePG.sci'); 
+exec('Gradient_F.sci');
+qini = 0.1 * rand(n-md,1);
+[Fopt,qopt,Gopt] = Gradient_F(OraclePG,qini);
+[q,z,f,p] = HydrauliqueP(qopt); Verification(q,z,f,p);

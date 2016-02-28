@@ -64,7 +64,8 @@ else
    xset("window",numwin);
    xset("wdim",600,650);
    clf(numwin);
-
+   
+   titrgr = 'Titre';
    xtitle(titrgr);
 
    subplot(211);
