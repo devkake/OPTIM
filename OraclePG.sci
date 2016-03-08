@@ -1,12 +1,20 @@
 function [F, G, ind] = OraclePG(qc, ind)
+
+// ---------------------------
+// Arguments and Return values
+// ---------------------------
     
-// qc : vecteur des debits rduits
-// F : valeur du critère evalue au point qc
-// G : vecteur des derivees du critere par rapport à qc
-// ind : indicateur du type de calcul à effectuer
+// qc : vecteur des debits reduits
+// F : valeur du critere evalue au point qc
+// G : vecteur des derivees du critere par rapport a qc
+// ind : indicateur du type de calcul a effectuer
 //      = 2 : calcul de F uniquement
 //      = 3 : calcul de G uniquement
 //      = 4 : calcul de F et G
+
+// ---------------------------
+// Variables
+// ---------------------------
 
 // n : nombre total d'arcs, N
 // m : nombre total de noeuds, N
@@ -51,13 +59,13 @@ function [F, G, ind] = OraclePG(qc, ind)
     
     if ind == 2 then
         // cas : seulement F
-        F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
+        F = ((q0+B*qc)'*(r.*(q0+B*qc).*(abs(q0+B*qc))))/3 + pr'*(Ar*(q0+B*qc));
     elseif ind == 3 then
         // cas : seulement G
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
     elseif ind == 4 then
         // cas : F et G
-        F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
+        F = ((q0+B*qc)'*(r.*(q0+B*qc).*(abs(q0+B*qc))))/3 + pr'*(Ar*(q0+B*qc));
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
     end
     

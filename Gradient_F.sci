@@ -44,7 +44,11 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
 //    - valeur du critere et du gradient
 
       ind = 4;
-      [F,G] = Oracle(x,ind);
+      [F,G] = Oracle(x,ind); // Oracle est l'argument
+
+//    ind = 7;
+//    [F,G,H] = OraclePH(x,ind);
+//    disp(H);
 
 //    - test de convergence
 
