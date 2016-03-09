@@ -74,16 +74,16 @@ function [F, G, H, ind] = OraclePH(qc, ind)
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
     elseif ind == 5 then
         // cas : seulement H
-        H = B'*diag(r.*(abs(q0+B*qc)))*B
+        H = 2*B'*diag(r.*(abs(q0+B*qc)))*B
     elseif ind == 6 then
         // cas : G et H
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
-        H = B'*diag(r.*(abs(q0+B*qc)))*B
+        H = 2*B'*diag(r.*(abs(q0+B*qc)))*B
     elseif ind == 7 then
         // cas : F, G et H
         F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
-        H = B'*diag(r.*(abs(q0+B*qc)))*B
+        H = 2*B'*diag(r.*(abs(q0+B*qc)))*B
     end
     
 endfunction
