@@ -64,13 +64,13 @@ function [F, G, H, ind] = OraclePH(qc, ind)
     
     if ind == 2 then
         // cas : seulement F
-        F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
+        F = ((q0+B*qc)'*(r.*(q0+B*qc).*(abs(q0+B*qc))))/3 + pr'*(Ar*(q0+B*qc));
     elseif ind == 3 then
         // cas : seulement G
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
     elseif ind == 4 then
         // cas : F et G
-        F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
+        F = ((q0+B*qc)'*(r.*(q0+B*qc).*(abs(q0+B*qc))))/3 + pr'*(Ar*(q0+B*qc));
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
     elseif ind == 5 then
         // cas : seulement H
@@ -81,7 +81,7 @@ function [F, G, H, ind] = OraclePH(qc, ind)
         H = 2*B'*diag(r.*(abs(q0+B*qc)))*B
     elseif ind == 7 then
         // cas : F, G et H
-        F = ((q0+B*qc)'*r.*(q0+B*qc).*(abs(q0+B*qc)))/3 + pr'*(Ar*(q0+B*qc));
+        F = ((q0+B*qc)'*(r.*(q0+B*qc).*(abs(q0+B*qc))))/3 + pr'*(Ar*(q0+B*qc));
         G = B'*Ar'*pr + B'*(r.*(q0+B*qc).*(abs(q0+B*qc)));
         H = 2*B'*diag(r.*(abs(q0+B*qc)))*B
     end
