@@ -19,7 +19,7 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
    typ = list("vec",1,"vec",1,"vec",1);
-   default = ["5000";"0.0005";"0.000001"];
+   default = ["5000";"1.0";"0.000001"];
    [ok,iter,alphai,tol] = getvalue(titre,labels,typ,default);
 
 // ----------------------------
@@ -63,7 +63,11 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
 
 //    - calcul de la longueur du pas de gradient
 
-      alpha = alphai;
+      [alpha,ok]=Wolfe(alphai,x,D,Oracle); // les conditions de Wolfe
+      if ok == 2 then
+          disp('Un pas converge. Peut-etre, le pas ne satisfait pas les conditions de Wolfe')
+      end
+      // alpha = alphai: // pas fixe
 
 //    - mise a jour des variables
 

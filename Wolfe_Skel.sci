@@ -48,10 +48,13 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
    
    ind = 4;
    [F,G] = Oracle(x,ind);
+   beta = G'*D; // <(nabla)J(x), D>
 
    // Initialisation de l'algorithme
 
    alphan = alpha; // initialisation de alpha
+   // alphan = 2*alpha
+   // alphan = -2*(alpha)/beta // pas de Fletcher
    xn     = x; // initialisation de xn
 
    // Boucle de calcul du pas
@@ -69,11 +72,9 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
       // -----> A completer...
       // -----> A completer...
       [Fn,Gn] = Oracle(xn, 4);
-      beta = G'*D;
       cond1 = Fn-F <= omega1*alphan*beta;
       cond2 = Gn'*D >= omega2*beta;
       
-
 
       // Test de la valeur de alphan :
       // - si les deux conditions de Wolfe sont verifiees,
@@ -88,8 +89,8 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
       else
           if ~cond2 then
               alphamin = alphan;
-              if alphamax == %inf then
-                  alphan = 2*alphan;
+              if isinf(alphamax)  then
+                  alphan = 2*alphamin;
               else
                   alphan = (alphamin+alphamax)/2.0;
               end

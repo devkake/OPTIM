@@ -7,6 +7,7 @@ exec('Verification.sci');
 // exec('Oracle.sci'); 
 exec('OraclePG.sci'); 
 exec('OraclePH.sci'); 
+exec('Wolfe_Skel.sci');
 exec('Gradient_F.sci');
 qini = 0.1 * rand(n-md,1);
 [Fopt,qopt,Gopt] = Gradient_F(OraclePG,qini);
