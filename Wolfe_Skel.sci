@@ -31,14 +31,14 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 // Coefficients de la recherche lineaire
 // -------------------------------------
 
-   omega1 = 0.1;
-   omega2 = 0.9;
+   omega1 = 0.1; // coefficient pour la 1-ere condition de Wolfe
+   omega2 = 0.9; // coefficient pour la 2-eme condition de Wolfe
 
-   alphamin = 0.0;
-   alphamax = %inf;
+   alphamin = 0.0; // initial alpha inf
+   alphamax = %inf; // initial alpha sup
 
-   ok = 0;
-   dltx = 0.00000001;
+   ok = 0; // pour le boucle de while
+   dltx = 0.00000001; // tolerance
 
 // ---------------------------------
 // Algorithme de Fletcher-Lemarechal
@@ -51,8 +51,8 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 
    // Initialisation de l'algorithme
 
-   alphan = alpha;
-   xn     = x;
+   alphan = alpha; // initialisation de alpha
+   xn     = x; // initialisation de xn
 
    // Boucle de calcul du pas
    //
@@ -61,13 +61,19 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 
    while ok == 0
       
-      xp = xn;
-      xn = x + (alphan*D);
+      xp = xn; // le point pour la valeur precedente du pas
+      xn = x + (alphan*D); // mettre xn a jour
 
       // Calcul des conditions de Wolfe
 
       // -----> A completer...
       // -----> A completer...
+      [Fn,Gn] = Oracle(xn, 4);
+      beta = G'*D;
+      cond1 = Fn-F <= omega1*alphan*beta;
+      cond2 = Gn'*D >= omega2*beta;
+      
+
 
       // Test de la valeur de alphan :
       // - si les deux conditions de Wolfe sont verifiees,
@@ -76,6 +82,21 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 
       // -----> A completer...
       // -----> A completer...
+      if ~cond1 then
+          alphamax = alphan;
+          alphan = (alphamin+alphamax)/2.0;
+      else
+          if ~cond2 then
+              alphamin = alphan;
+              if alphamax == %inf then
+                  alphan = 2*alphan;
+              else
+                  alphan = (alphamin+alphamax)/2.0;
+              end
+          else
+              ok = 1;
+          end
+      end
 
       // Test d'indistinguabilite
 
