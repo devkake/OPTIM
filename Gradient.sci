@@ -1,11 +1,11 @@
-function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
+function [fopt,xopt,gopt]=Gradient(Oracle,xini)
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //         RESOLUTION D'UN PROBLEME D'OPTIMISATION SANS CONTRAINTES          //
 //                                                                           //
-//         Methode de gradient a pas fixe                                    //
+//         Methode de gradient a pas non-fixe                                //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,12 +14,12 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres du gradient a pas fixe";
+   titre = "Parametres du gradient a pas non-fixe";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
    typ = list("vec",1,"vec",1,"vec",1);
-   default = ["5000";"0.0005";"0.000001"];
+   default = ["5000";"1.0";"0.000001"];
    [ok,iter,alphai,tol] = getvalue(titre,labels,typ,default);
 
 // ----------------------------
@@ -63,7 +63,10 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
 
 //    - calcul de la longueur du pas de gradient
 
-      alpha = alphai: // pas fixe
+      [alpha,ok]=Wolfe(alphai,x,D,Oracle); // les conditions de Wolfe
+      if ok == 2 then
+          disp('Un pas converge. Peut-etre, le pas ne satisfait pas les conditions de Wolfe')
+      end
 
 //    - mise a jour des variables
 

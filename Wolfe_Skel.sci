@@ -69,8 +69,6 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
 
       // Calcul des conditions de Wolfe
 
-      // -----> A completer...
-      // -----> A completer...
       [Fn,Gn] = Oracle(xn, 4);
       cond1 = Fn-F <= omega1*alphan*beta;
       cond2 = Gn'*D >= omega2*beta;
@@ -81,8 +79,6 @@ function [alphan,ok]=Wolfe(alpha,x,D,Oracle)
       //   faire ok = 1 : on sort alors de la boucle while
       // - sinon, modifier la valeur de alphan : on reboucle.
 
-      // -----> A completer...
-      // -----> A completer...
       if ~cond1 then
           alphamax = alphan;
           alphan = (alphamin+alphamax)/2.0;
