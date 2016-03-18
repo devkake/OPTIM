@@ -1,11 +1,11 @@
-function [fopt,xopt,gopt]=BFGS(Oracle,xini)
+function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //         RESOLUTION D'UN PROBLEME D'OPTIMISATION SANS CONTRAINTES          //
 //                                                                           //
-//         Methode de quasi-Newton a pas non-fixe                            //
+//         Methode de Newton a pas non-fixe                                  //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres de quasi-Newton a pas fixe";
+   titre = "Parametres de Newton a pas non-fixe";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
@@ -38,16 +38,14 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 // -------------------------
 
    x = xini;
-   
-   [F, G] = ;
 
    kstar = iter;
    for k = 1:iter
 
 //    - valeur du critere et du gradient
 
-      ind = 4;
-      [F,G] = Oracle(x,ind); // Oracle est l'argument
+      ind = 7;
+      [F,G,H] = Oracle(x,ind); // Oracle est l'argument
 
 
 //    - test de convergence
@@ -59,7 +57,8 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 
 //    - calcul de la direction de descente
 
-      D = -G;
+      // D = -G / H;
+      D = -inv(H)*G
 
 //    - calcul de la longueur du pas de gradient
 

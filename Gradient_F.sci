@@ -63,7 +63,7 @@ function [fopt,xopt,gopt]=Gradient_F(Oracle,xini)
 
 //    - calcul de la longueur du pas de gradient
 
-      alpha = alphai: // pas fixe
+      alpha = alphai; // pas fixe
 
 //    - mise a jour des variables
 

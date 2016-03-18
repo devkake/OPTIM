@@ -1,11 +1,11 @@
-function [fopt,xopt,gopt]=BFGS(Oracle,xini)
+function [fopt,xopt,gopt]=PolakRibiere(Oracle,xini)
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 //         RESOLUTION D'UN PROBLEME D'OPTIMISATION SANS CONTRAINTES          //
 //                                                                           //
-//         Methode de quasi-Newton a pas non-fixe                            //
+//         Methode de gradient conjugue a pas non-fixe                       //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres de quasi-Newton a pas fixe";
+   titre = "Parametres du gradient conjugue a pas non-fixe";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
@@ -32,15 +32,15 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 
    timer();
 
-
 // -------------------------
 // Boucle sur les iterations
 // -------------------------
 
    x = xini;
+   [F, G_prec] = Oracle(xini,3);
+   disp(G_prec)
+   D = 0; // Premier D est le gradient (D = -G + beta*D;)
    
-   [F, G] = ;
-
    kstar = iter;
    for k = 1:iter
 
@@ -49,6 +49,9 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       ind = 4;
       [F,G] = Oracle(x,ind); // Oracle est l'argument
 
+//    ind = 7;
+//    [F,G,H] = OraclePH(x,ind);
+//    disp(H);
 
 //    - test de convergence
 
@@ -58,8 +61,10 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       end
 
 //    - calcul de la direction de descente
+        
+      beta = (G - G_prec)'*G / (G_prec'*G_prec);
 
-      D = -G;
+      D = -G + beta*D;
 
 //    - calcul de la longueur du pas de gradient
 
@@ -72,6 +77,8 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 //    - mise a jour des variables
 
       x = x + (alpha*D);
+      
+      G_prec = G;
 
 //    - evolution du gradient, du pas et du critere
 
