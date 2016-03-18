@@ -5,7 +5,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 //                                                                           //
 //         RESOLUTION D'UN PROBLEME D'OPTIMISATION SANS CONTRAINTES          //
 //                                                                           //
-//         Methode de quasi-Newton a pas non-fixe                            //
+//         Methode de BFGS (quasi-Newton) a pas non-fixe                     //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 // Parametres de la methode
 // ------------------------
 
-   titre = "Parametres de quasi-Newton a pas fixe";
+   titre = "Parametres de BFGS (quasi-Newton) a pas non-fixe";
    labels = ["Nombre maximal d''iterations";...
              "Valeur du pas de gradient";...
              "Seuil de convergence sur ||G||"];
