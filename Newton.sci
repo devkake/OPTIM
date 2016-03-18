@@ -57,8 +57,8 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
 //    - calcul de la direction de descente
 
-      // D = -G / H;
-      D = -inv(H)*G
+      D = -H\G;
+      // D = -inv(H)*G
 
 //    - calcul de la longueur du pas de gradient
 

@@ -39,7 +39,8 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 
    x = xini;
    
-   [F, G] = ;
+   W = eye(length(x),length(x)); // Condition initial pour W
+   I = eye(length(x),length(x)); // Diminuer le cout du calcul
 
    kstar = iter;
    for k = 1:iter
@@ -48,7 +49,6 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 
       ind = 4;
       [F,G] = Oracle(x,ind); // Oracle est l'argument
-
 
 //    - test de convergence
 
@@ -59,7 +59,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
 
 //    - calcul de la direction de descente
 
-      D = -G;
+      D = -W*G;
 
 //    - calcul de la longueur du pas de gradient
 
@@ -67,11 +67,17 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       if ok == 2 then
           disp('Un pas converge. Peut-etre, le pas ne satisfait pas les conditions de Wolfe')
       end
-      // alpha = alphai: // pas fixe
 
 //    - mise a jour des variables
 
       x = x + (alpha*D);
+      
+//    - calcul de W
+      
+      [F,G_next] = Oracle(x,3)
+      du = alpha*D;
+      dG = G_next-G;
+      W = (I-((du*dG')/(dG'*du)))*W*(I-((dG*du')/(dG'*du))) + ((du*du')/(dG'*du));
 
 //    - evolution du gradient, du pas et du critere
 
