@@ -50,12 +50,6 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       ind = 4;
       [F,G] = Oracle(x,ind); // Oracle est l'argument
 
-//    - test de convergence
-
-      if norm(G) <= tol then
-         kstar = k;
-         break
-      end
 
 //    - calcul de la direction de descente
 
@@ -84,6 +78,13 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       logG = [ logG ; log10(norm(G)) ];
       logP = [ logP ; log10(alpha) ];
       Cout = [ Cout ; F ];
+
+//    - test de convergence
+
+      if norm(G) <= tol then
+         kstar = k;
+         break
+      end
 
    end
 

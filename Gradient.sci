@@ -50,12 +50,6 @@ function [fopt,xopt,gopt]=Gradient(Oracle,xini)
 //    [F,G,H] = OraclePH(x,ind);
 //    disp(H);
 
-//    - test de convergence
-
-      if norm(G) <= tol then
-         kstar = k;
-         break
-      end
 
 //    - calcul de la direction de descente
 
@@ -77,6 +71,13 @@ function [fopt,xopt,gopt]=Gradient(Oracle,xini)
       logG = [ logG ; log10(norm(G)) ];
       logP = [ logP ; log10(alpha) ];
       Cout = [ Cout ; F ];
+      
+//    - test de convergence
+
+      if norm(G) <= tol then
+         kstar = k;
+         break
+      end
 
    end
 
