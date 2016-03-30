@@ -10,7 +10,7 @@ exec('OraclePH.sci');
 exec('Wolfe_Skel.sci');
 exec('Newton.sci');
 // qini = 0.1 * rand(n-md,1);
-qini = 0.1 * ones(n-md, 1);
+qini = 0.2 * ones(n-md, 1);
 [Fopt,qopt,Gopt] = Newton(OraclePH,qini);
 [q,z,f,p] = HydrauliqueP(qopt); 
 Verification(q,z,f,p);

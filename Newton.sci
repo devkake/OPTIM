@@ -38,6 +38,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 // -------------------------
 
    x = xini;
+   tol = 1e-10 // tolerance for inverse of hessian
 
    kstar = iter;
    for k = 1:iter
@@ -49,9 +50,25 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
 
 //    - calcul de la direction de descente
-
-      D = -H\G;
-      // D = -inv(H)*G
+      
+      regularity = rcond(H) > tol; // H is regular (inversible) or not
+      if regularity then
+          D = -H\G;
+          // D = -inv(H)*G
+      else
+          // H is not regular (inversible) or not
+          D = -G; // Descent du gradient
+          
+//          // @https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization
+//          // Levenberg–Marquardt algorithm
+//          mu = 0.1
+//          while ~regularity
+//              H = H + mu*eye(H);
+//              regularity = rcond(H) > tol
+//          end
+//          D = -H\G;
+          
+      end
 
 //    - calcul de la longueur du pas de gradient
 
