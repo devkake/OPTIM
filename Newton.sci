@@ -57,6 +57,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
           // D = -inv(H)*G
       else
           // H is not regular (inversible) or not
+          disp('Matrice hessienne nest pas inversible, peut-etre')
           D = -G; // Descent du gradient
           
 //          // @https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization
