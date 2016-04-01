@@ -64,7 +64,6 @@ function [F, G, H, ind] = OracleDH(lambda, ind)
 
     z = -Ar'*pr-Ad'*lambda;
     qdiese = (z./abs(z)).*sqrt(abs(z)./r);
-    
     if ind == 2 then
         // cas : seulement F
         F = -1 * (1./3.*qdiese'*(r.*qdiese.*abs(qdiese)) + pr'*(Ar*qdiese) + lambda'*(Ad*qdiese-fd));
@@ -79,6 +78,7 @@ function [F, G, H, ind] = OracleDH(lambda, ind)
         // cas : seulement H
         // H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
         // H = -1 * (-1./2.*Ad*diag(Ad*(1/sqrt(r.*abs(z)))));
+        H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
     elseif ind == 6 then
         // cas : G et H
         G = -1 * (Ad*qdiese - fd);
