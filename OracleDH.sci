@@ -78,16 +78,36 @@ function [F, G, H, ind] = OracleDH(lambda, ind)
         // cas : seulement H
         // H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
         // H = -1 * (-1./2.*Ad*diag(Ad*(1/sqrt(r.*abs(z)))));
-        H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
+        H = -1 * ((-1./2.)*Ad*diag((1. ./ sqrt(r.*abs(-z))))*Ad');
+        // S = sqrt(r.*abs(-z))
+        // T = unsur(S);
+        // H = -1 * (-1./2.*Ad*diag(T)*Ad');
     elseif ind == 6 then
         // cas : G et H
         G = -1 * (Ad*qdiese - fd);
-        H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
+        S = sqrt(r.*abs(-z))
+        T = unsur(S);
+        //H = -1 * (-1./2.*Ad*diag(T)*Ad');
+        H = -1 * ((-1./2.)*Ad*diag((1. ./ sqrt(r.*abs(-z))))*Ad');
     elseif ind == 7 then
         // cas : F, G et H
         F = -1 * (1./3.*qdiese'*(r.*qdiese.*abs(qdiese)) + pr'*(Ar*qdiese) + lambda'*(Ad*qdiese-fd));
         G = -1 * (Ad*qdiese - fd);
-        H = -1 * (-1./2.*Ad*diag((1/sqrt(r.*abs(z))))*Ad');
+        S = sqrt(r.*abs(-z))
+        T = unsur(S);
+        //H = -1 * (-1./2.*Ad*diag(T)*Ad');
+        H = -1 * ((-1./2.)*Ad*diag((1. ./ sqrt(r.*abs(-z))))*Ad');
     end
     
+endfunction
+
+function a = unsur(b)
+    m = size(b,1);
+    n = size(b,2);
+    a = zeros(m,n);
+    for i = 1:m
+        for j = 1:n
+            a(i,j) = 1.0/b(i,j);
+        end
+    end
 endfunction

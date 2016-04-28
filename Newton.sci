@@ -38,7 +38,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 // -------------------------
 
    x = xini;
-   tol = 1e-15 // tolerance for inverse of hessian
+   tol = 1e-10 // tolerance for inverse of hessian
 
    kstar = iter;
    for k = 1:iter
@@ -50,8 +50,9 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
 
 //    - calcul de la direction de descente
-      disp(H);
-      disp(rcond(H));
+      //disp(G);
+      //disp(H);
+      //disp(rcond(H));
       regularity = rcond(H) > tol; // H is regular (inversible) or not
       if regularity then
           D = -H\G;
