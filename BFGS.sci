@@ -89,6 +89,7 @@ function [fopt,xopt,gopt]=BFGS(Oracle,xini)
       
    end
 
+   disp(x);
 // ---------------------------
 // Resultats de l'optimisation
 // ---------------------------

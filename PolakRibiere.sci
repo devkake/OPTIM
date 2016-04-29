@@ -88,6 +88,7 @@ function [fopt,xopt,gopt]=PolakRibiere(Oracle,xini)
       
    end
 
+   disp(x);
 // ---------------------------
 // Resultats de l'optimisation
 // ---------------------------

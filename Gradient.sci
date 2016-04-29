@@ -80,6 +80,8 @@ function [fopt,xopt,gopt]=Gradient(Oracle,xini)
       end
 
    end
+   
+   disp(x);
 
 // ---------------------------
 // Resultats de l'optimisation

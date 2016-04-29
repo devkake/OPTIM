@@ -100,6 +100,7 @@ function [fopt,xopt,gopt]=Newton(Oracle,xini)
 
    end
 
+   disp(x);
 // ---------------------------
 // Resultats de l'optimisation
 // ---------------------------
